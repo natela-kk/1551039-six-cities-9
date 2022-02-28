@@ -1,5 +1,5 @@
-import Logo from './logo';
-import Navigation from './navigation';
+import Logo from '../logo/logo';
+import Navigation from '../navigation/navigation';
 
 
 function Header(): JSX.Element {

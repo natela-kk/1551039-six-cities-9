@@ -1,6 +1,6 @@
-import Tabs from './tabs';
-import Cities from './cities';
-import Header from './header';
+import Tabs from '../../components/tabs/tabs';
+import Cities from '../../components/cities/cities';
+import Header from '../../components/header/header';
 
 type MainProps = {
   count: number;

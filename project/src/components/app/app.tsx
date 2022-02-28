@@ -2,7 +2,7 @@ import Main from '../../pages/main/main';
 import FavoritesComponent from '../../pages/favorites/favorites';
 import LoginComponent from '../../pages/login/login';
 import PropertyComponent from '../../pages/property/property';
-import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';

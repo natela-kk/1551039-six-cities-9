@@ -1,6 +1,6 @@
-import Sort from './sort';
-import Map from './map';
-import CardList from './card-list';
+import Sort from '../sort/sort';
+import Map from '../map/map';
+import CardList from '../card-list/card-list';
 
 type CitiesProps = {
   count: number;
