@@ -1,4 +1,4 @@
-import CardComponent from '../../components/card/card';
+import CardComponent from '../card/card';
 
 function CardList(): JSX.Element {
   return (
