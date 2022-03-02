@@ -1,4 +1,16 @@
-function CardComponent(): JSX.Element {
+import { Offer } from '../../types/offer';
+import {useState} from 'react';
+
+type OfferProps = {
+  offer: Offer;
+}
+function CardComponent(offer: OfferProps): JSX.Element {
+  /////рэйтинг рассчитывала так, чтобы звездочки закрасились правильно :))
+  const rating = offer.offer.rating*14.5;
+
+  const offerId = useState(offer.offer.id);
+  console.log(offerId);
+
   return(
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -12,7 +24,7 @@ function CardComponent(): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{offer.offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -24,14 +36,14 @@ function CardComponent(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style = {{width: 80}}></span>
+            <span style = {{width: rating}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="#">{offer.offer.title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offer.offer.type}</p>
       </div>
     </article>
   );

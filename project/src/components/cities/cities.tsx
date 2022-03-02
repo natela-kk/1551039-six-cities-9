@@ -1,12 +1,15 @@
 import Sort from '../sort/sort';
 import Map from '../map/map';
 import CardList from '../card-list/card-list';
+import {Offer} from '../../types/offer';
 
 type CitiesProps = {
   count: number;
+  offers: Offer[];
 }
 
-function Cities({count}: CitiesProps): JSX.Element {
+function Cities({count, offers}: CitiesProps): JSX.Element {
+  console.log(offers);
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -16,7 +19,7 @@ function Cities({count}: CitiesProps): JSX.Element {
 
           <Sort />
 
-          <CardList />
+          <CardList offers={offers}/>
 
         </section>
         <div className="cities__right-section">
