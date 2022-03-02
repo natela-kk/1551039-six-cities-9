@@ -9,7 +9,6 @@ type CitiesProps = {
 }
 
 function Cities({count, offers}: CitiesProps): JSX.Element {
-  console.log(offers);
   return (
     <div className="cities">
       <div className="cities__places-container container">
