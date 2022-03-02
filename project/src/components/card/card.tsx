@@ -5,8 +5,6 @@ type OfferProps = {
   offer: Offer;
 }
 function CardComponent({offer}: OfferProps): JSX.Element {
-  /////рэйтинг рассчитывала так, чтобы звездочки закрасились правильно :))
-  const rating = offer.rating*14.5;
 
   const offerId = useState(offer.id);
   console.log(offerId);
@@ -36,7 +34,7 @@ function CardComponent({offer}: OfferProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style = {{width: rating}}></span>
+            <span style = {{width: `${offer.rating/5*100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
