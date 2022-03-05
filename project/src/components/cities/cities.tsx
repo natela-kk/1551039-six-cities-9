@@ -23,7 +23,7 @@ function Cities({count, offers}: CitiesProps): JSX.Element {
         </section>
         <div className="cities__right-section">
 
-          <Map />
+          <Map className='cities__map'/>
 
         </div>
       </div>

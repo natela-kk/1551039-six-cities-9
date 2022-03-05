@@ -1,6 +1,10 @@
-import Features from '../../components/features/features';
+import Features from '../../components/goods/goods';
 import { Offer } from '../../types/offer';
-import Reviews from '../../components/reviews/reviews';
+import CommentList from '../../components/comments/comments';
+import Header from '../../components/header/header';
+import Gallery from '../../components/gallery/gallery';
+import Host from '../../components/host/host';
+import Map from '../../components/map/map';
 
 type PropertyProps = {
   offers: Offer[];
@@ -10,57 +14,14 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
   const offer = offers[0];
   return(
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+
+      <Header />
+
       <main className="page__main page__main--property">
         <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-            </div>
-          </div>
+
+          <Gallery images={offer.images}/>
+
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
@@ -79,7 +40,7 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}} />
+                  <span style={{width: `${offer.rating/5*100}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{offer.rating}</span>
@@ -89,46 +50,24 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
                   {offer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {offer.bedrooms} {offer.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}
                 </li>
                 <li className="property__feature property__feature--adults">
-                Max {offer.capacity} adults
+                Max {offer.maxAdults} {offer.maxAdults > 1 ? 'adults' : 'adult'}
                 </li>
               </ul>
               <div className="property__price">
                 <b className="property__price-value">€{offer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
-              <div className="property__inside">
-                <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <Features features={offer.features}/>
-                </ul>
-              </div>
-              <div className="property__host">
-                <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width={74} height={74} alt="Host avatar" />
-                  </div>
-                  <span className="property__user-name">
-                    {offer.hostName}
-                  </span>
-                  <span className="property__user-status">
-                  Pro
-                  </span>
-                </div>
-                <div className="property__description">
-                  <p className="property__text">
-                    {offer.description}
-                  </p>
-                </div>
-              </div>
+
+              <Features features={offer.goods}/>
+
+              <Host offer={offer}/>
+
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews · <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <Reviews reviews={offer.reviews}/>
-                </ul>
+                <CommentList />
                 <form className="reviews__form form" action="#" method="post">
                   <label className="reviews__label form__label" htmlFor="review">Your review</label>
                   <div className="reviews__rating-form form__rating">
@@ -174,7 +113,7 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map" />
+          <Map className='property__map' />
         </section>
         <div className="container">
           <section className="near-places places">

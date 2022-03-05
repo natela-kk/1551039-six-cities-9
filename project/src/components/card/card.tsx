@@ -1,19 +1,17 @@
 import { Offer } from '../../types/offer';
-import {useState} from 'react';
 
 type OfferProps = {
   offer: Offer;
+  handlerSetOfferId(property: Offer): void;
 }
-function CardComponent({offer}: OfferProps): JSX.Element {
 
-  const offerId = useState(offer.id);
-  console.log(offerId);
-
+function Card({offer, handlerSetOfferId}: OfferProps): JSX.Element {
   return(
-    <article className="cities__place-card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+    <article className="cities__place-card place-card" onMouseOver={() => handlerSetOfferId(offer)}>
+      {offer.isPremium ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place" />
@@ -47,5 +45,5 @@ function CardComponent({offer}: OfferProps): JSX.Element {
   );
 }
 
-export default CardComponent;
+export default Card;
 
