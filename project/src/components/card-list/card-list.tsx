@@ -8,17 +8,16 @@ type OfferProps = {
 }
 
 function CardList({offers}: OfferProps): JSX.Element {
+  const [, setOfferId] = useState(0);
 
-  const [offerId, setOfferId] = useState(0);
-
-  const handlerSetOfferId = (property: Offer) => {
-    setOfferId(property.id);
+  const handleHover = (id: number) => {
+    setOfferId(id);
   };
 
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <Card offer={offer} key={offer.id} handlerSetOfferId={handlerSetOfferId}/>
+        <Card offer={offer} key={offer.id} onOfferHover={handleHover}/>
       ))}
     </div>
   );

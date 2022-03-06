@@ -1,20 +1,25 @@
 import Features from '../../components/goods/goods';
 import { Offer } from '../../types/offer';
-import CommentList from '../../components/comments/comments';
+import CommentList from '../../components/comment-list/comment-list';
 import Header from '../../components/header/header';
 import Gallery from '../../components/gallery/gallery';
 import Host from '../../components/host/host';
 import Map from '../../components/map/map';
+import {comments} from '../../mocks/comments';
+import CommentForm from '../../components/comment-form/comment-form';
+import { useParams } from 'react-router-dom';
 
 type PropertyProps = {
   offers: Offer[];
 }
 
-function PropertyComponent({offers}: PropertyProps): JSX.Element {
-  const offer = offers[0];
+function Property({offers}: PropertyProps): JSX.Element {
+  const params = useParams();
+  const offerId = Number(params.id);
+  const offer = offers[offerId];
+
   return(
     <div className="page">
-
       <Header />
 
       <main className="page__main page__main--property">
@@ -24,9 +29,10 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
 
           <div className="property__container container">
             <div className="property__wrapper">
+              {offer.isPremium &&
               <div className="property__mark">
                 <span>Premium</span>
-              </div>
+              </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {offer.title}
@@ -35,7 +41,7 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  <span className="visually-hidden">`{offer.isFavorite ? 'In' : 'To'}` bookmarks</span>
                 </button>
               </div>
               <div className="property__rating rating">
@@ -66,55 +72,19 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
               <Host offer={offer}/>
 
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments.length}</span></h2>
+
                 <CommentList />
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" defaultValue={5} id="5-stars" type="radio" />
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width={37} height={33}>
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input className="form__rating-input visually-hidden" name="rating" defaultValue={4} id="4-stars" type="radio" />
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width={37} height={33}>
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input className="form__rating-input visually-hidden" name="rating" defaultValue={3} id="3-stars" type="radio" />
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width={37} height={33}>
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input className="form__rating-input visually-hidden" name="rating" defaultValue={2} id="2-stars" type="radio" />
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width={37} height={33}>
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input className="form__rating-input visually-hidden" name="rating" defaultValue={1} id="1-star" type="radio" />
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width={37} height={33}>
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={''} />
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                    To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                  </div>
-                </form>
+
+                <CommentForm />
+
               </section>
             </div>
           </div>
-          <Map className='property__map' />
+
+          <Map className="property__map" />
         </section>
+
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -223,4 +193,4 @@ function PropertyComponent({offers}: PropertyProps): JSX.Element {
   );
 }
 
-export default PropertyComponent;
+export default Property;

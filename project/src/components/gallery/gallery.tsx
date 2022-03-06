@@ -3,6 +3,7 @@ type Images = {
 }
 
 function Gallery({images}: Images): JSX.Element {
+  console.log(images);
   return (
     <div className="property__gallery-container container">
       <div className="property__gallery">
