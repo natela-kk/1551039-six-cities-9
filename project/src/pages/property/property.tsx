@@ -41,7 +41,9 @@ function Property({offers}: PropertyProps): JSX.Element {
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
-                  <span className="visually-hidden">`{offer.isFavorite ? 'In' : 'To'}` bookmarks</span>
+                  <span className="visually-hidden">
+                    `{offer.isFavorite ? 'In' : 'To'}` bookmarks
+                  </span>
                 </button>
               </div>
               <div className="property__rating rating">
@@ -72,7 +74,10 @@ function Property({offers}: PropertyProps): JSX.Element {
               <Host offer={offer}/>
 
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments.length}</span></h2>
+                <h2 className="reviews__title">
+                  Reviews ·{' '}
+                  <span className="reviews__amount">{comments.length}</span>
+                </h2>
 
                 <CommentList />
 
@@ -92,7 +97,12 @@ function Property({offers}: PropertyProps): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/">
-                    <img className="place-card__image" src="img/room.jpg" width={260} height={200} alt="Place image" />
+                    <img
+                      className="place-card__image"
+                      src="img/room.jpg"
+                      width={260} height={200}
+                      alt={offer.title}
+                    />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -123,7 +133,12 @@ function Property({offers}: PropertyProps): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/">
-                    <img className="place-card__image" src="img/apartment-02.jpg" width={260} height={200} alt="Place image" />
+                    <img
+                      className="place-card__image"
+                      src="img/apartment-02.jpg"
+                      width={260} height={200}
+                      alt={offer.title}
+                    />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -157,7 +172,12 @@ function Property({offers}: PropertyProps): JSX.Element {
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/">
-                    <img className="place-card__image" src="img/apartment-03.jpg" width={260} height={200} alt="Place image" />
+                    <img
+                      className="place-card__image"
+                      src="img/apartment-03.jpg"
+                      width={260} height={200}
+                      alt={offer.title}
+                    />
                   </a>
                 </div>
                 <div className="place-card__info">

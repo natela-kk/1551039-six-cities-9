@@ -1,8 +1,7 @@
 import Header from '../../components/header/header';
-import {Offer} from '../../types/offer';
 import Card from '../../components/card/card';
-import {useState} from 'react';
-
+import Footer from '../../components/footer/footer';
+import {Offer} from '../../types/offer';
 
 type FavoriteProps = {
   offers: Offer[];
@@ -11,21 +10,9 @@ type FavoriteProps = {
 
 function Favorites({offers}: FavoriteProps): JSX.Element {
 
-  const cities: string[] = [];
+  const favorites = offers.filter((offer) => offer.isFavorite);
 
-  offers.forEach((offer) => {
-    if(offer.isFavorite && offer.city.name) {
-      cities.push(offer.city.name);
-    }
-  });
-
-  const favoriteCities = [...new Set(cities)];
-
-  const [, setOfferId] = useState(0);
-
-  const handleHover = (id: number) => {
-    setOfferId(id);
-  };
+  const favoriteCities = [...new Set(favorites.map((offer) => offer.city.name))];
 
   return(
     <div className="page">
@@ -47,8 +34,9 @@ function Favorites({offers}: FavoriteProps): JSX.Element {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {offers.map((offer) => ( offer.isFavorite && offer.city.name === city &&
-                    <Card offer={offer} key={offer.id} onOfferHover={handleHover} isSmall />
+                    {offers.map((offer) => ( offer.isFavorite && offer.city.name === city && (
+                      <Card offer={offer} key={offer.id} isSmall />
+                    )
                     ))}
                   </div>
                 </li>
@@ -57,11 +45,8 @@ function Favorites({offers}: FavoriteProps): JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width={64} height={33} />
-        </a>
-      </footer>
+
+      <Footer />
     </div>
   );
 }
