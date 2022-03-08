@@ -1,12 +1,14 @@
 import Tabs from '../../components/tabs/tabs';
 import Cities from '../../components/cities/cities';
 import Header from '../../components/header/header';
+import {Offer} from '../../types/offer';
 
 type MainProps = {
   count: number;
+  offers: Offer[];
 }
 
-function Main({count}: MainProps): JSX.Element {
+function Main({count, offers}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
@@ -17,7 +19,7 @@ function Main({count}: MainProps): JSX.Element {
 
         <Tabs />
 
-        <Cities count={count} />
+        <Cities count={count} offers={offers}/>
       </main>
     </div>);
 }
