@@ -9,6 +9,7 @@ type CitiesProps = {
 }
 
 function Cities({count, offers}: CitiesProps): JSX.Element {
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -23,7 +24,7 @@ function Cities({count, offers}: CitiesProps): JSX.Element {
         </section>
         <div className="cities__right-section">
 
-          <Map className='cities__map'/>
+          <Map className='cities__map' offers={offers} />
 
         </div>
       </div>
