@@ -87,7 +87,7 @@ function Property({offers}: PropertyProps): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" />
+          <Map className="property__map" offers={offers} />
         </section>
 
         <div className="container">
