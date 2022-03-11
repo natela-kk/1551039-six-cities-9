@@ -32,7 +32,7 @@ function Cities({count, offers}: CitiesProps): JSX.Element {
 
           <Sort />
 
-          <CardList offers={offers} onOfferHover={handleHover}/>
+          <CardList offers={offers} onOfferHover={handleHover} classList={['cities__places-list', ' tabs__content']} />
 
         </section>
         <div className="cities__right-section">

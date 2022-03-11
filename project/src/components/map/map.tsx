@@ -13,7 +13,6 @@ type MapProps = {
 
 function Map({ className, offers, selectedPoint}: MapProps): JSX.Element {
   const city = offers[0].city;
-
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
