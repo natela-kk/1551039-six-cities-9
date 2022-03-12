@@ -92,7 +92,7 @@ function Property({offers}: PropertyProps): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" offers={nearbyOffers} selectedPoint={-1} />
+          <Map className="property__map" offers={nearbyOffers} />
         </section>
 
         <div className="container">

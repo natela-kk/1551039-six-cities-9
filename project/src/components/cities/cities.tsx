@@ -10,7 +10,7 @@ type CitiesProps = {
 }
 
 function Cities({count, offers}: CitiesProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<null | number | undefined>(-1);
+  const [selectedPoint, setSelectedPoint] = useState<null | number | undefined>(null);
 
   const handleHover = (newId: number) => {
     setSelectedPoint(newId);

@@ -30,7 +30,7 @@ function Map({ className, offers, selectedPoint}: MapProps): JSX.Element {
   });
 
   useEffect(() => {
-    if (map && (selectedPoint || selectedPoint === 0 || selectedPoint === null)) {
+    if (map) {
       offers.forEach((offer) => {
         leaflet
           .marker({
