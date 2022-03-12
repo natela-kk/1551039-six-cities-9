@@ -9,25 +9,12 @@ import { Offer } from '../../types/offer';
 import {comments} from '../../mocks/comments';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
-import { useState } from 'react';
 
 type PropertyProps = {
   offers: Offer[];
 }
 
 function Property({offers}: PropertyProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState(0.1);
-
-  const handleHover = (id: number) => {
-    const currentPoint = offers.find((offer) =>
-      offer.id === id,
-    );
-
-    if(currentPoint) {
-      setSelectedPoint(currentPoint.id);
-    }
-  };
-
 
   const params = useParams();
   const offerId = Number(params.id);
@@ -45,10 +32,12 @@ function Property({offers}: PropertyProps): JSX.Element {
 
           <div className="property__container container">
             <div className="property__wrapper">
-              {property.isPremium &&
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>}
+              {property.isPremium && (
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+              )}
+
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {property.title}
@@ -58,13 +47,13 @@ function Property({offers}: PropertyProps): JSX.Element {
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">
-                    `{property.isFavorite ? 'In' : 'To'}` bookmarks
+                    {property.isFavorite ? 'In' : 'To'} bookmarks
                   </span>
                 </button>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${property.rating/5*100}%`}} />
+                  <span style={{width: `${property.rating / 5 * 100}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{property.rating}</span>
@@ -103,14 +92,14 @@ function Property({offers}: PropertyProps): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" offers={nearbyOffers} selectedPoint={selectedPoint} />
+          <Map className="property__map" offers={nearbyOffers} selectedPoint={-1} />
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
-            <CardList offers={nearbyOffers} onOfferHover={handleHover} classList={['near-places__list']}/>
+            <CardList offers={nearbyOffers} classList={['near-places__list']}/>
 
           </section>
         </div>

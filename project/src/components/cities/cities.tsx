@@ -10,16 +10,14 @@ type CitiesProps = {
 }
 
 function Cities({count, offers}: CitiesProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState(0.1);
+  const [selectedPoint, setSelectedPoint] = useState<null | number | undefined>(-1);
 
-  const handleHover = (id: number) => {
-    const currentPoint = offers.find((offer) =>
-      offer.id === id,
-    );
+  const handleHover = (newId: number) => {
+    setSelectedPoint(newId);
+  };
 
-    if(currentPoint) {
-      setSelectedPoint(currentPoint.id);
-    }
+  const handleLeave = (newId: null | undefined) => {
+    setSelectedPoint(newId);
   };
 
 
@@ -32,7 +30,7 @@ function Cities({count, offers}: CitiesProps): JSX.Element {
 
           <Sort />
 
-          <CardList offers={offers} onOfferHover={handleHover} classList={['cities__places-list', ' tabs__content']} />
+          <CardList offers={offers} onOfferHover={handleHover} onOfferLeave={handleLeave} classList={['cities__places-list tabs__content']} />
 
         </section>
         <div className="cities__right-section">

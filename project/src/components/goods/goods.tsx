@@ -19,4 +19,3 @@ function Features({ features }: FeaturesProps): JSX.Element {
 export default Features;
 
 
-// this.state.data.map((item,i) => <li key={i}>Test</li>)
