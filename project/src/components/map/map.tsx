@@ -7,13 +7,12 @@ import leaflet from 'leaflet';
 type MapProps = {
   className: string;
   offers: Offer[];
-  selectedPoint?: number;
+  selectedPoint?: number | null;
 };
 
 
 function Map({ className, offers, selectedPoint}: MapProps): JSX.Element {
   const city = offers[0].city;
-
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
 
@@ -31,7 +30,7 @@ function Map({ className, offers, selectedPoint}: MapProps): JSX.Element {
   });
 
   useEffect(() => {
-    if (map && (selectedPoint || selectedPoint === 0)) {
+    if (map) {
       offers.forEach((offer) => {
         leaflet
           .marker({

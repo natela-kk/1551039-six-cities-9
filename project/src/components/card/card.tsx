@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 type OfferProps = {
   offer: Offer;
   onOfferHover?: (id: number) => void;
+  onOfferLeave?:(id: null) => void;
   isSmall?: boolean;
 }
 
-function Card({offer, onOfferHover, isSmall = false}: OfferProps): JSX.Element {
+function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps): JSX.Element {
   const modifier = isSmall ? 'favorites' : 'cities';
 
   return(
 
     <article
       className={`${isSmall ? 'favorites__card' : 'cities__place-card'} place-card`}
-      onMouseOver={() => onOfferHover && onOfferHover(offer.id)}
+      onMouseOver={() => onOfferHover?.(offer.id)}
+      onMouseLeave={() => onOfferLeave?.(null)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
