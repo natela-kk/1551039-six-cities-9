@@ -20,6 +20,7 @@ function Property({offers}: PropertyProps): JSX.Element {
   const offerId = Number(params.id);
   const property = offers[offerId];
   const nearbyOffers = (offers.filter((offer) => offer !== property)).slice(0,3);
+  const offersPins = [...nearbyOffers, property];
 
   return(
     <div className="page">
@@ -92,7 +93,7 @@ function Property({offers}: PropertyProps): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" offers={nearbyOffers} />
+          <Map className="property__map" offers={offersPins} selectedPoint={offerId}/>
         </section>
 
         <div className="container">

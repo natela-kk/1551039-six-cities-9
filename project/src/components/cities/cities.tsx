@@ -3,6 +3,7 @@ import Map from '../map/map';
 import CardList from '../card-list/card-list';
 import {Offer} from '../../types/offer';
 import {useState} from 'react';
+import {store} from '../../store/index';
 
 type CitiesProps = {
   count: number;
@@ -30,7 +31,7 @@ function Cities({count, offers}: CitiesProps): JSX.Element {
 
           <Sort />
 
-          <CardList offers={offers} onOfferHover={handleHover} onOfferLeave={handleLeave} classList={['cities__places-list tabs__content']} />
+          <CardList offers={store.getState().offersList} onOfferHover={handleHover} onOfferLeave={handleLeave} classList={['cities__places-list tabs__content']} />
 
         </section>
         <div className="cities__right-section">

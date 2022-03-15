@@ -1,6 +1,6 @@
 import Card from '../card/card';
-import { Offer } from '../../types/offer';
-
+import {Offer} from '../../types/offer';
+import {store} from '../../store/index';
 
 type OfferProps = {
   offers: Offer[];
@@ -10,7 +10,7 @@ type OfferProps = {
 }
 
 function CardList({offers, onOfferHover, onOfferLeave ,classList}: OfferProps): JSX.Element {
-
+  console.log(store.getState());
   return (
     <div className={`${classList} places__list`}>
       {offers.map((offer) => (
