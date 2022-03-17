@@ -1,25 +1,16 @@
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch} from '../../hooks';
+import {changeSortTypeAction} from '../../action';
 
+type SortProps = {
+  sortType: string;
+}
 
-function Sort(): JSX.Element {
-  const {city, offers} = useAppSelector((state) => state);
+function Sort({sortType}: SortProps): JSX.Element {
 
-  const filteredOffers = offers.filter((offer) => offer.city.name === city);
+  const dispatch = useAppDispatch();
 
-  const sortPriceToHigh = () => {
-console.log(filteredOffers.sort((prev, next) => prev.price - next.price));
-  };
-
-  const sortPriceToLow = () => {
-console.log(filteredOffers.sort((prev, next) => next.price - prev.price));
-  };
-
-  const sortByRating = () => {
-console.log(filteredOffers.sort((prev, next) => next.rating - prev.rating));
-  };
-
-  const sortByPopular = () => {
-console.log(filteredOffers);
+  const handleClick = (sort: string): void => {
+    dispatch(changeSortTypeAction(sort));
   };
 
   return (
@@ -32,10 +23,10 @@ console.log(filteredOffers);
         </svg>
       </span>
       <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option places__option--active" tabIndex={0} onClick={sortByPopular}>Popular</li>
-        <li className="places__option" tabIndex={0} onClick={sortPriceToHigh}>Price: low to high</li>
-        <li className="places__option" tabIndex={0} onClick={sortPriceToLow}>Price: high to low</li>
-        <li className="places__option" tabIndex={0} onClick={sortByRating}>Top rated first</li>
+        <li className={`places__option ${sortType === 'Popular' && 'places__option--active'}`} tabIndex={0} onClick={() => {handleClick('Popular');}}>Popular</li>
+        <li className={`places__option ${sortType === 'Price: low to high' && 'places__option--active'}`} tabIndex={0} onClick={() => {handleClick('Price: low to high');}}>Price: low to high</li>
+        <li className={`places__option ${sortType === 'Price: high to low' && 'places__option--active'}`} tabIndex={0} onClick={() => {handleClick('Price: high to low');}}>Price: high to low</li>
+        <li className={`places__option ${sortType === 'Top rated first' && 'places__option--active'}`} tabIndex={0} onClick={() => {handleClick('Top rated first');}}>Top rated first</li>
       </ul>
     </form>
   );

@@ -4,7 +4,7 @@ import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks';
 
 function Main(): JSX.Element {
-  const {city, offers} = useAppSelector((state) => state);
+  const {city, offers, sortType} = useAppSelector((state) => state);
 
   return (
     <div className="page page--gray page--main">
@@ -14,9 +14,9 @@ function Main(): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs currentsCity={city}/>
+        <Tabs currentsCity={city.name}/>
 
-        <Cities offers={offers.filter((offer) => offer.city.name === city)}/>
+        <Cities offers={offers.filter((offer) => offer.city.name === city.name)} sortType={sortType} currentsCity={city}/>
       </main>
     </div>);
 }
