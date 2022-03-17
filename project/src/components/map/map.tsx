@@ -10,12 +10,23 @@ type MapProps = {
   selectedPoint?: number | null;
 };
 
-
 function Map({ className, offers, selectedPoint}: MapProps): JSX.Element {
-  const city = offers[0].city;
+  let city;
+  if(offers.length > 0) {
+    city = offers[0].city;
+  } else {
+    city = {
+      location: {
+        latitude: 52.374,
+        longitude:  4.88969,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    };
+  }
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.location);
-
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: './img/pin.svg',

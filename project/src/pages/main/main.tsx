@@ -1,14 +1,11 @@
 import Tabs from '../../components/tabs/tabs';
 import Cities from '../../components/cities/cities';
 import Header from '../../components/header/header';
-import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks';
 
-type MainProps = {
-  count: number;
-  offers: Offer[];
-}
+function Main(): JSX.Element {
+  const {city, offers} = useAppSelector((state) => state);
 
-function Main({count, offers}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
@@ -17,9 +14,9 @@ function Main({count, offers}: MainProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
 
-        <Tabs />
+        <Tabs currentsCity={city}/>
 
-        <Cities count={count} offers={offers}/>
+        <Cities offers={offers.filter((offer) => offer.city.name === city)}/>
       </main>
     </div>);
 }

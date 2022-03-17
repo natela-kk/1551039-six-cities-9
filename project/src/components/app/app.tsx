@@ -10,17 +10,16 @@ import {AppRoute} from '../../const';
 import {Offer} from '../../types/offer';
 
 type AppProps = {
-  offersCount: number;
   offers: Offer[];
 }
 
-function App({offersCount, offers}: AppProps): JSX.Element {
+function App({offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main count={offersCount} offers={offers} />}
+          element={<Main />}
         />
         <Route
           path={AppRoute.Login}
