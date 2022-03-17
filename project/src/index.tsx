@@ -2,9 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {offers} from './mocks/offers';
+import { Provider } from 'react-redux';
+import {store} from './store/index';
 
-const OFFERS_COUNT = 312;
 
 ReactDOM.render(
-  <App offersCount = {OFFERS_COUNT} offers = {offers}/>,
+  <Provider store={store}>
+    <App offers={offers} />
+  </Provider>
+  ,
   document.getElementById('root'));

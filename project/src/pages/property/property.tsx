@@ -9,17 +9,20 @@ import { Offer } from '../../types/offer';
 import {comments} from '../../mocks/comments';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
+import {useAppSelector} from '../../hooks';
 
 type PropertyProps = {
   offers: Offer[];
 }
 
 function Property({offers}: PropertyProps): JSX.Element {
+  const {city} = useAppSelector((state) => state);
 
   const params = useParams();
   const offerId = Number(params.id);
   const property = offers[offerId];
   const nearbyOffers = (offers.filter((offer) => offer !== property)).slice(0,3);
+  const offersPins = [...nearbyOffers, property];
 
   return(
     <div className="page">
@@ -92,7 +95,7 @@ function Property({offers}: PropertyProps): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" offers={nearbyOffers} />
+          <Map className="property__map" offers={offersPins} selectedPoint={offerId} city={city} />
         </section>
 
         <div className="container">
