@@ -2,9 +2,11 @@ import Tabs from '../../components/tabs/tabs';
 import Cities from '../../components/cities/cities';
 import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks';
+import {Offer} from '../../types/offer';
 
 function Main(): JSX.Element {
   const {city, offers, sortType} = useAppSelector((state) => state);
+  const filteredOffers = offers.filter((offer: Offer) => offer.city.name === city.name);
 
   return (
     <div className="page page--gray page--main">
@@ -16,7 +18,7 @@ function Main(): JSX.Element {
 
         <Tabs currentsCity={city.name}/>
 
-        <Cities offers={offers.filter((offer) => offer.city.name === city.name)} sortType={sortType} currentsCity={city}/>
+        <Cities offers={filteredOffers} sortType={sortType} currentsCity={city}/>
       </main>
     </div>);
 }

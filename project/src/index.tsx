@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {offers} from './mocks/offers';
 import { Provider } from 'react-redux';
 import {store} from './store/index';
+import {fetchOfferAction} from './store/api-actions';
 
+store.dispatch(fetchOfferAction());
 
 ReactDOM.render(
   <Provider store={store}>
-    <App offers={offers} />
+    <App />
   </Provider>
   ,
   document.getElementById('root'));

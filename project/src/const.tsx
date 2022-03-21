@@ -60,3 +60,17 @@ export const CITIES = [
     name: 'Dusseldorf',
   },
 ];
+
+
+export const SORT_TYPE = {
+  popular: 'Popular',
+  priceAsc: 'Price: low to high',
+  priceDes: 'Price: high to low',
+  topRated: 'Top rated first',
+};
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}

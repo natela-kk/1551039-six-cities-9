@@ -4,16 +4,22 @@ import Login from '../../pages/login/login';
 import Property from '../../pages/property/property';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type AppProps = {
-  offers: Offer[];
-}
 
-function App({offers}: AppProps): JSX.Element {
+function App(): JSX.Element {
+  const {authorizationStatus, isDataLoaded, offers} = useAppSelector((state) => state);
+
+  if(!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -29,7 +35,7 @@ function App({offers}: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={authorizationStatus}
             >
               <Favorites offers={offers}/>
             </PrivateRoute>
