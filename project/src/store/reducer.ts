@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCityAction, changeSortTypeAction, loadOffersAction, loadPropertyAction} from '../action';
+import {changeCityAction, changeSortTypeAction, loadOffersAction, loadPropertyAction, setError} from './action';
 import { AuthorizationStatus, CITIES } from '../const';
 
 const DEFAULT_CITY = CITIES[0];
@@ -12,6 +12,7 @@ const initialState = {
   sortType: DEFAULT_TYPE,
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Auth,
+  error: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -28,6 +29,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadPropertyAction, (state, action) => {
       state.property = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

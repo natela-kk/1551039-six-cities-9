@@ -1,4 +1,4 @@
-import {changeCityAction} from '../../action';
+import {changeCityAction} from '../../store/action';
 import { CITIES } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {City} from '../../types/offer';

@@ -1,31 +1,30 @@
 import {useAppDispatch} from '../../hooks';
-import {changeSortTypeAction} from '../../action';
+import {changeSortTypeAction} from '../../store/action';
 import {SORT_TYPE} from '../../const';
 import cn from 'classnames';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type SortProps = {
   sortType: string;
 }
 
 function Sort({sortType}: SortProps): JSX.Element {
-  const [isOpened, openSortList] = useState(false);
+  const [open, setOpen] = useState(false);
+  const sortRef = useRef(null);
 
-  const handleDocumentClick = () => {
-    const sortList = document.querySelector('.places__sorting-type');
-    document.addEventListener('click', (evt) => {
-      if(evt.target !== sortList && isOpened) {
-        changeSortState();
-      }
-    });
+  const handleSortClick = (e: any) => {
+    if(e.path[0] !== sortRef && open) {
+      setOpen(!open);
+    }
   };
 
-  handleDocumentClick();
+  useEffect(() => {
+    document.addEventListener('click', handleSortClick);
 
-  const changeSortState = () => {
-    openSortList(!isOpened);
-  };
-
+    return () => {
+      document.removeEventListener('click', handleSortClick);
+    };
+  });
 
   const dispatch = useAppDispatch();
 
@@ -37,16 +36,13 @@ function Sort({sortType}: SortProps): JSX.Element {
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       {' '}
-      <span className="places__sorting-type" tabIndex={0} onClick={() => {
-        changeSortState();
-      }}
-      >
-                Popular
+      <span className="places__sorting-type" tabIndex={0} onClick={() => setOpen(!open)} ref={sortRef}>
+        {sortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={cn('places__options places__options--custom', {'places__options--opened ': isOpened})}>
+      <ul className={cn('places__options places__options--custom', {'places__options--opened ': open})}>
         {Object.entries(SORT_TYPE).map(([key, label]) => (
           <li
             key={key}

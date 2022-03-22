@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from './const';
+import { AuthorizationStatus } from '../const';
 
 
 export const Action = {
@@ -8,6 +8,7 @@ export const Action = {
   LOAD_OFFERS: 'LOAD_OFFERS',
   REQUIRE_AUTHORIZATION: 'REQUIRE_AUTHORIZATION',
   LOAD_PROPERTY: 'LOAD_PROPERTY',
+  SET_ERROR: 'SET_ERROR',
 };
 
 export const changeCityAction = createAction(Action.CHANGE_CITY, (city) => ({
@@ -23,3 +24,6 @@ export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQ
 
 export const loadPropertyAction = createAction(Action.LOAD_PROPERTY, (property) => ({
   payload: property }));
+
+export const setError = createAction<string>(Action.SET_ERROR);
+
