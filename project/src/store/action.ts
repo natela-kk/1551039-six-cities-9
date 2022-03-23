@@ -25,5 +25,4 @@ export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQ
 export const loadPropertyAction = createAction(Action.LOAD_PROPERTY, (property) => ({
   payload: property }));
 
-export const setError = createAction<string>(Action.SET_ERROR);
 

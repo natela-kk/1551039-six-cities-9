@@ -7,7 +7,7 @@ import PrivateRoute from '../private-route/private-route';
 import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../loading-screen/loading-screen';
+import LoadingScreen from '../loader/loader';
 
 
 function App(): JSX.Element {
