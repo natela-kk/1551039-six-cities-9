@@ -3,6 +3,7 @@ import Map from '../map/map';
 import CardList from '../card-list/card-list';
 import {Offer, City} from '../../types/offer';
 import {useState} from 'react';
+import {getSortedOffers} from '../../utils/sort';
 
 type CitiesProps = {
   offers: Offer[];
@@ -11,32 +12,17 @@ type CitiesProps = {
 }
 
 function Cities({offers, sortType, currentsCity}: CitiesProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<null | number | undefined>(null);
+  const [selectedPoint, setSelectedPoint] = useState<null | number>(null);
 
   const handleHover = (newId: number) => {
     setSelectedPoint(newId);
   };
 
-  const handleLeave = (newId: null | undefined) => {
+  const handleLeave = (newId: null) => {
     setSelectedPoint(newId);
   };
 
-  const getSortedOffers = (sort: string) => {
-    switch(sort) {
-      case('Price: low to high'): {
-        return offers.sort((prev, next) => prev.price - next.price);
-      }
-      case('Price: high to low'): {
-        return offers.sort((prev, next) => next.price - prev.price);
-      }
-      case('Top rated first'): {
-        return offers.sort((prev, next) => next.rating - prev.rating);
-      }
-      default: return offers;
-    }
-  };
-
-  const sortedOffers = getSortedOffers(sortType);
+  const sortedOffers = getSortedOffers(offers, sortType);
 
   return (
     <div className="cities">

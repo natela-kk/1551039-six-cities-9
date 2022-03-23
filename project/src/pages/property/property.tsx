@@ -1,4 +1,4 @@
-import CommentList from '../../components/comment-list/comment-list';
+// import CommentList from '../../components/comment-list/comment-list';
 import CommentForm from '../../components/comment-form/comment-form';
 import Features from '../../components/goods/goods';
 import Header from '../../components/header/header';
@@ -6,7 +6,6 @@ import Gallery from '../../components/gallery/gallery';
 import Host from '../../components/host/host';
 import Map from '../../components/map/map';
 import { Offer } from '../../types/offer';
-import {comments} from '../../mocks/comments';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import {useAppSelector} from '../../hooks';
@@ -84,10 +83,13 @@ function Property({offers}: PropertyProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews ·{' '}
-                  <span className="reviews__amount">{comments.length}</span>
+                  <span className="reviews__amount">
+                  5
+                  </span>
+                  {/* {comments.length}</span> */}
                 </h2>
 
-                <CommentList />
+                {/* <CommentList /> */}
 
                 <CommentForm />
 
