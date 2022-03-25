@@ -4,11 +4,12 @@ import Login from '../../pages/login/login';
 import Property from '../../pages/property/property';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
+import {Route, Routes, Navigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../loader/loader';
-
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded, offers} = useAppSelector((state) => state);
@@ -19,9 +20,8 @@ function App(): JSX.Element {
     );
   }
 
-
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -41,7 +41,7 @@ function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route  path={AppRoute.Offer}>
+        <Route path={AppRoute.Offer}>
           <Route index element={<Navigate to={AppRoute.Main} />} />
           <Route path=':id' element={<Property offers={offers}/>} />
         </Route>
@@ -50,7 +50,7 @@ function App(): JSX.Element {
           element={<NotFoundScreen />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

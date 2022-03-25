@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 
 
 export const Action = {
@@ -9,6 +9,7 @@ export const Action = {
   REQUIRE_AUTHORIZATION: 'REQUIRE_AUTHORIZATION',
   LOAD_PROPERTY: 'LOAD_PROPERTY',
   SET_ERROR: 'SET_ERROR',
+  REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
 };
 
 export const changeCityAction = createAction(Action.CHANGE_CITY, (city) => ({
@@ -25,4 +26,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>(Action.REQ
 export const loadPropertyAction = createAction(Action.LOAD_PROPERTY, (property) => ({
   payload: property }));
 
+export const redirectToRoute = createAction<AppRoute>(Action.REDIRECT_TO_ROUTE);
 

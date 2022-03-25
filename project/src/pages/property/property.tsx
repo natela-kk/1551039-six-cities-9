@@ -9,10 +9,15 @@ import { Offer } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import {useAppSelector} from '../../hooks';
+import {fetchPropertyAction} from '../../store/api-actions';
+import {store} from '../../store/index';
 
 type PropertyProps = {
   offers: Offer[];
 }
+
+////не знаю, куда положить этот диспатч:)
+store.dispatch(fetchPropertyAction());
 
 function Property({offers}: PropertyProps): JSX.Element {
   const {city} = useAppSelector((state) => state);
@@ -91,7 +96,7 @@ function Property({offers}: PropertyProps): JSX.Element {
 
                 {/* <CommentList /> */}
 
-                <CommentForm />
+                {/* <CommentForm /> */}
 
               </section>
             </div>
