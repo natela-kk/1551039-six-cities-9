@@ -1,38 +1,59 @@
 import Header from '../../components/header/header';
 import { loginAction } from '../../store/api-actions';
-import { AuthData } from '../../types/auth-data';
 import { useAppDispatch } from '../../hooks';
 import { FormEvent, useRef } from 'react';
 
+const PASSWORD_REGEXP = /(?=.*[0-9])(?=.*[a-zA-Z])/;
+const PASSWORD_ERROR = 'Пароль должен состоять минимум из одной буквы и одной цифры';
+const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_ERROR = 'Введите корректный адрес электронной почты';
+
+
 function Login(): JSX.Element {
+  const dispatch = useAppDispatch();
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const dispatch = useAppDispatch();
-
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    const passwordPattern = new RegExp(/(?=.*[0-9])(?=.*[a-zA-Z])/);
-
-    let isValidPassword;
-
-    if(passwordRef.current !== null) {
-      isValidPassword = passwordPattern.test(passwordRef.current.value);
-    }
-
-    if ((emailRef.current !== null && passwordRef.current !== null) && isValidPassword) {
+    if (emailRef.current !== null && passwordRef.current !== null) {
       passwordRef.current.setCustomValidity('');
-      onSubmit({
-        login: emailRef.current.value,
-        password: passwordRef.current.value,
-      });
-    } else if(!isValidPassword && passwordRef.current !== null) {
-      passwordRef.current.setCustomValidity('Пароль должен состоять минимум из одной буквы и одной цифры');
+
+      const isValidPassword = PASSWORD_REGEXP.test(passwordRef.current.value);
+
+      if (isValidPassword) {
+        dispatch(loginAction({
+          login: emailRef.current.value,
+          password: passwordRef.current.value,
+        }));
+      } else {
+        passwordRef.current.setCustomValidity(PASSWORD_ERROR);
+      }
+    }
+  };
+
+  const handlePasswordChange = () => {
+    if (passwordRef.current !== null) {
+      const isValidPassword = PASSWORD_REGEXP.test(passwordRef.current.value);
+
+      if (isValidPassword) {
+        passwordRef.current.setCustomValidity('');
+      } else {
+        passwordRef.current.setCustomValidity(PASSWORD_ERROR);
+      }
+    }
+  };
+
+  const handleEmailChange = () => {
+    if (emailRef.current !== null) {
+      const isValidEmail = EMAIL_REGEXP.test(emailRef.current.value);
+
+      if (isValidEmail) {
+        emailRef.current.setCustomValidity('');
+      } else {
+        emailRef.current.setCustomValidity(EMAIL_ERROR);
+      }
     }
   };
 
@@ -58,6 +79,7 @@ function Login(): JSX.Element {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  onChange={handleEmailChange}
                   required
                 />
               </div>
@@ -69,6 +91,7 @@ function Login(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  onChange={handlePasswordChange}
                   required
                 />
               </div>
