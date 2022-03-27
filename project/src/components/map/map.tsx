@@ -28,31 +28,29 @@ function Map({ className, offers, selectedPoint, city}: MapProps): JSX.Element {
     iconAnchor: [20, 40],
   });
 
-  const clearMarkers = (group: leaflet.LayerGroup<any>) => group.clearLayers();
-
-  const createMarkers = (group: leaflet.LayerGroup<any> | leaflet.Map) => {
-    offers.forEach((offer) => {
-      leaflet
-        .marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude,
-        }, {
-          icon: (offer.id === selectedPoint)
-            ? currentCustomIcon
-            : defaultCustomIcon,
-        })
-        .addTo(group);
-    });
-  };
-
   useEffect(() => {
     if (map) {
       const markerGroup = new LayerGroup().addTo(map);
+      const clearMarkers = () => markerGroup.clearLayers();
 
-      clearMarkers(markerGroup);
-      createMarkers(markerGroup);
+      offers.forEach((offer) => {
+        leaflet
+          .marker({
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          }, {
+            icon: (offer.id === selectedPoint)
+              ? currentCustomIcon
+              : defaultCustomIcon,
+          })
+          .addTo(markerGroup);
+      });
 
       map.setView([city.location.latitude, city.location.longitude]);
+
+      return () => {
+        clearMarkers();
+      };
     }
 
   }, [map, offers, selectedPoint]);

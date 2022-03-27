@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCityAction, changeSortTypeAction, loadOffersAction, loadPropertyAction, requireAuthorization} from './action';
+import {changeCityAction, changeSortTypeAction, loadOffersAction, loadPropertyAction, requireAuthorization, redirectToRoute} from './action';
 import { AuthorizationStatus, CITIES } from '../const';
 
 const DEFAULT_CITY = CITIES[0];

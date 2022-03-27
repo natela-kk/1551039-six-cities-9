@@ -1,5 +1,5 @@
 // import CommentList from '../../components/comment-list/comment-list';
-import CommentForm from '../../components/comment-form/comment-form';
+// import CommentForm from '../../components/comment-form/comment-form';
 import Features from '../../components/goods/goods';
 import Header from '../../components/header/header';
 import Gallery from '../../components/gallery/gallery';
@@ -9,16 +9,20 @@ import { Offer } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import {useAppSelector} from '../../hooks';
+import {fetchPropertyAction} from '../../store/api-actions';
 
 type PropertyProps = {
   offers: Offer[];
 }
+
 
 function Property({offers}: PropertyProps): JSX.Element {
   const {city} = useAppSelector((state) => state);
 
   const params = useParams();
   const offerId = Number(params.id);
+  // store.dispatch(fetchPropertyAction(offerId));
+
   const property = offers[offerId];
   const nearbyOffers = (offers.filter((offer) => offer !== property)).slice(0,3);
   const offersPins = [...nearbyOffers, property];
@@ -91,7 +95,7 @@ function Property({offers}: PropertyProps): JSX.Element {
 
                 {/* <CommentList /> */}
 
-                <CommentForm />
+                {/* <CommentForm /> */}
 
               </section>
             </div>

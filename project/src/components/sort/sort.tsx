@@ -13,8 +13,10 @@ function Sort({sortType}: SortProps): JSX.Element {
   const sortRef = useRef(null);
 
   const handleSortClick = (e: any) => {
-    if(e.path[0] !== sortRef && open) {
-      setOpen(!open);
+    if(e.path) {
+      if(e.path[0] !== sortRef && open) {
+        setOpen(!open);
+      }
     }
   };
 

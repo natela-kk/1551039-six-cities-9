@@ -16,7 +16,7 @@ export const errorHandle = (error: ErrorType): void => {
         toast.info(response.data.error);
         break;
       case HTTP_CODE.UNAUTHORIZED:
-        toast.info(response.data.error);
+        toast.info('Убедитесь, что вы авторизованы');
         break;
       case HTTP_CODE.NOT_FOUND:
         toast.info(response.data.error);
