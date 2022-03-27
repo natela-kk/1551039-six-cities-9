@@ -1,5 +1,4 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {useParams} from 'react-router-dom';
 import {loadOffersAction, requireAuthorization, loadPropertyAction, redirectToRoute} from './action';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {api, store} from './index';
@@ -22,17 +21,15 @@ export const fetchOfferAction = createAsyncThunk(
 ///fetchPropertyAction пока не использовала, что-то пошло не так
 export const fetchPropertyAction = createAsyncThunk(
   'data/fetchProperty',
-  async () => {
-    try {
-      const params = useParams();
-      const offerId = Number(params.id);
-      console.log(`${APIRoute.Offers}/${offerId}`);
-      const {data} = await api.get(`${APIRoute.Offers}/${offerId}`);
-      store.dispatch(loadPropertyAction(data));
-    } catch(error) {
-      console.log(error);
-    }
+  async (id) => {
+    // try {
+    //       console.log(`${APIRoute.Offers}/${id}`);
+    const {data} = await api.get(`${APIRoute.Offers}/${id}`);
+    store.dispatch(loadPropertyAction(data));
+    //     } catch(error) {
+    //       console.log(error);
   },
+  // },
 );
 
 export const checkAuthAction = createAsyncThunk(

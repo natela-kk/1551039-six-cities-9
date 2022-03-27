@@ -16,11 +16,23 @@ function Login(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (emailRef.current !== null && passwordRef.current !== null) {
+
+    const passwordPattern = new RegExp(/(?=.*[0-9])(?=.*[a-zA-Z])/);
+
+    let isValidPassword;
+
+    if(passwordRef.current !== null) {
+      isValidPassword = passwordPattern.test(passwordRef.current.value);
+    }
+
+    if ((emailRef.current !== null && passwordRef.current !== null) && isValidPassword) {
+      passwordRef.current.setCustomValidity('');
       onSubmit({
         login: emailRef.current.value,
         password: passwordRef.current.value,
       });
+    } else if(!isValidPassword && passwordRef.current !== null) {
+      passwordRef.current.setCustomValidity('Пароль должен состоять минимум из одной буквы и одной цифры');
     }
   };
 
