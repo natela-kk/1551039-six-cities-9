@@ -1,17 +1,31 @@
-// import {Comment} from '../../types/comment';
-// // import {comments} from '../../mocks/comments';
-// import CommentItem from '../comment-item/comment-item';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCommentsAction } from '../../store/api-actions';
+import {Comment} from '../../types/comment';
+import CommentItem from '../comment-item/comment-item';
 
-// function CommentList(): JSX.Element {
-//   return (
-//     <ul className="reviews__list">
-//       {comments.map((commentItem: Comment) => (
-//         <CommentItem comment={commentItem} key={commentItem.id} />
-//       ))}
-//     </ul>
-//   );}
+type CommentListProps = {
+  offerId: number;
+}
+
+function CommentList({offerId}: CommentListProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const {comments} = useAppSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(fetchCommentsAction(offerId));
+  }, []);
+
+  return (
+    <ul className="reviews__list">
+      {comments.map((commentItem: Comment) => (
+        <CommentItem comment={commentItem} key={commentItem.id} />
+      ))}
+    </ul>
+  );}
 
 
-// export default CommentList;
+export default CommentList;
 
 export{};

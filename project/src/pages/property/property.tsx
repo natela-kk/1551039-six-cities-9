@@ -1,5 +1,5 @@
-// import CommentList from '../../components/comment-list/comment-list';
-// import CommentForm from '../../components/comment-form/comment-form';
+import CommentList from '../../components/comment-list/comment-list';
+import CommentForm from '../../components/comment-form/comment-form';
 import Features from '../../components/goods/goods';
 import Header from '../../components/header/header';
 import Gallery from '../../components/gallery/gallery';
@@ -9,23 +9,34 @@ import { Offer } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import {useAppSelector} from '../../hooks';
-import {fetchPropertyAction} from '../../store/api-actions';
+import {useEffect} from 'react';
+import {fetchNearbyAction, fetchPropertyAction} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks/index';
+import LoadingScreen from '../../components/loader/loader';
+import {AuthorizationStatus} from '../../const';
 
 type PropertyProps = {
   offers: Offer[];
 }
 
-
 function Property({offers}: PropertyProps): JSX.Element {
-  const {city} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
+  const {city, property, nearby, comments, authorizationStatus} = useAppSelector((state) => state);
   const params = useParams();
   const offerId = Number(params.id);
-  // store.dispatch(fetchPropertyAction(offerId));
+  const pins = [...nearby, property];
 
-  const property = offers[offerId];
-  const nearbyOffers = (offers.filter((offer) => offer !== property)).slice(0,3);
-  const offersPins = [...nearbyOffers, property];
+  useEffect(() => {
+    dispatch(fetchPropertyAction(offerId));
+    dispatch(fetchNearbyAction(offerId));
+  }, []);
+
+  if(Object.keys(property).length === 0) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return(
     <div className="page">
@@ -87,28 +98,26 @@ function Property({offers}: PropertyProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews ·{' '}
-                  <span className="reviews__amount">
-                  5
-                  </span>
-                  {/* {comments.length}</span> */}
+                  <span className="reviews__amount">{comments.length}</span>
                 </h2>
 
-                {/* <CommentList /> */}
+                <CommentList offerId={offerId}/>
 
-                {/* <CommentForm /> */}
+                {authorizationStatus === AuthorizationStatus.Auth &&
+                <CommentForm offerId={offerId} />}
 
               </section>
             </div>
           </div>
 
-          <Map className="property__map" offers={offersPins} selectedPoint={offerId} city={city} />
+          <Map className="property__map" offers={pins} selectedPoint={offerId} city={city} />
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
-            <CardList offers={nearbyOffers} classList={['near-places__list']}/>
+            <CardList offers={nearby} classList={['near-places__list']}/>
 
           </section>
         </div>

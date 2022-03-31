@@ -16,20 +16,13 @@ function Login(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    evt.currentTarget.checkValidity();
 
     if (emailRef.current !== null && passwordRef.current !== null) {
-      passwordRef.current.setCustomValidity('');
-
-      const isValidPassword = PASSWORD_REGEXP.test(passwordRef.current.value);
-
-      if (isValidPassword) {
-        dispatch(loginAction({
-          login: emailRef.current.value,
-          password: passwordRef.current.value,
-        }));
-      } else {
-        passwordRef.current.setCustomValidity(PASSWORD_ERROR);
-      }
+      dispatch(loginAction({
+        login: emailRef.current.value,
+        password: passwordRef.current.value,
+      }));
     }
   };
 

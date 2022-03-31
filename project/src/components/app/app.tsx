@@ -44,6 +44,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Offer}>
           <Route index element={<Navigate to={AppRoute.Main} />} />
           <Route path=':id' element={<Property offers={offers}/>} />
+          <Route path="*"  element={<NotFoundScreen />} />
         </Route>
         <Route
           path="*"

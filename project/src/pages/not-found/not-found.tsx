@@ -6,7 +6,7 @@ import {AppRoute} from '../../const';
 function NotFoundScreen (): JSX.Element {
   return (
     <div className={styles.notFound}>
-      <img src="img/error.png"/>
+      <img src="img/error.png" alt='error'/>
       <p className={styles.error}>404</p>
       <p className={styles.errorText}>page not found</p>
       <Link to={AppRoute.Main} className={styles.link}>back to the main page</Link>
