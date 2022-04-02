@@ -5,7 +5,6 @@ import Header from '../../components/header/header';
 import Gallery from '../../components/gallery/gallery';
 import Host from '../../components/host/host';
 import Map from '../../components/map/map';
-import { Offer } from '../../types/offer';
 import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import {useAppSelector} from '../../hooks';
@@ -15,28 +14,29 @@ import {useAppDispatch} from '../../hooks/index';
 import LoadingScreen from '../../components/loader/loader';
 import {AuthorizationStatus} from '../../const';
 
-type PropertyProps = {
-  offers: Offer[];
-}
+const NEARBY_COUNT = 3;
+const IMAGES_COUNT = 6;
 
-function Property({offers}: PropertyProps): JSX.Element {
+function Property(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const {city, property, nearby, comments, authorizationStatus} = useAppSelector((state) => state);
-  const params = useParams();
-  const offerId = Number(params.id);
-  const pins = [...nearby, property];
+  const {id} = useParams();
+  const offerId = Number(id);
+  const nearbyOffers = nearby.slice(0, NEARBY_COUNT);
 
   useEffect(() => {
     dispatch(fetchPropertyAction(offerId));
     dispatch(fetchNearbyAction(offerId));
-  }, []);
+  }, [dispatch, offerId]);
 
-  if(Object.keys(property).length === 0) {
+  if(!property) {
     return (
       <LoadingScreen />
     );
   }
+
+  const pins = [...nearbyOffers, property];
 
   return(
     <div className="page">
@@ -45,7 +45,7 @@ function Property({offers}: PropertyProps): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
 
-          <Gallery images={property.images}/>
+          <Gallery images={property.images.slice(0, IMAGES_COUNT)}/>
 
           <div className="property__container container">
             <div className="property__wrapper">
@@ -111,13 +111,14 @@ function Property({offers}: PropertyProps): JSX.Element {
           </div>
 
           <Map className="property__map" offers={pins} selectedPoint={offerId} city={city} />
+
         </section>
 
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
 
-            <CardList offers={nearby} classList={['near-places__list']}/>
+            <CardList offers={nearbyOffers} classList={['near-places__list']}/>
 
           </section>
         </div>

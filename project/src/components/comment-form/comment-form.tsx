@@ -1,8 +1,10 @@
+import { Fragment } from 'react';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { postCommentAction } from '../../store/api-actions';
 
 const RATING_TITLES = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+
 const MAX_STARS = 5;
 const MIN_LETTERS = 50;
 const MAX_LETTERS = 300;
@@ -25,6 +27,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
 
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(e.target.value));
+    console.log(e.target.value);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -38,7 +41,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
       }));
       setComment('');
       setRating(0);
-      ratingRef.current.checked = false;
+      // ratingRef.current.checked = false;
     }
   };
 
@@ -56,7 +59,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
         {RATING_TITLES.map((ratingValue, index) => {
           const starsCount = MAX_STARS - index;
           return (
-            <>
+            <Fragment key={starsCount}>
               <input className="form__rating-input visually-hidden"
                 name="rating"
                 value={starsCount}
@@ -64,8 +67,10 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
                 type="radio"
                 onChange={handleRatingChange}
                 ref={ratingRef}
+                checked={starsCount === rating}
+                key={starsCount}
               />
-              <label htmlFor={`${starsCount}-star${starsCount > 1 && 's'}`}
+              <label htmlFor={`${starsCount}-star${starsCount > 1 ? 's' : ''}`}
                 className="reviews__rating-label form__rating-label"
                 title={ratingValue}
               >
@@ -73,7 +78,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
                   <use xlinkHref="#icon-star" />
                 </svg>
               </label>
-            </>
+            </Fragment>
           );})}
       </div>
 
