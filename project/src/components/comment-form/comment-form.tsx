@@ -1,11 +1,23 @@
-import { ChangeEvent, useState } from 'react';
+import { Fragment } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { postCommentAction } from '../../store/api-actions';
 
 const RATING_TITLES = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+
 const MAX_STARS = 5;
 const MIN_LETTERS = 50;
 const MAX_LETTERS = 300;
 
-function CommentForm(): JSX.Element {
+type CommentFormProps = {
+  offerId: number;
+}
+
+function CommentForm({offerId}: CommentFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const commentRef = useRef<HTMLTextAreaElement | null>(null);
+  const ratingRef = useRef<HTMLInputElement | null>(null);
+
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
@@ -15,26 +27,50 @@ function CommentForm(): JSX.Element {
 
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(e.target.value));
+    console.log(e.target.value);
   };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (commentRef.current !== null && ratingRef.current !== null) {
+      dispatch(postCommentAction({
+        id: offerId,
+        comment: comment,
+        rating: rating,
+      }));
+      setComment('');
+      setRating(0);
+      // ratingRef.current.checked = false;
+    }
+  };
+
 
   const isDisabled = rating === 0 || comment.length > MAX_LETTERS ||  comment.length < MIN_LETTERS;
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
       <div className="reviews__rating-form form__rating">
         {RATING_TITLES.map((ratingValue, index) => {
           const starsCount = MAX_STARS - index;
           return (
-            <>
+            <Fragment key={starsCount}>
               <input className="form__rating-input visually-hidden"
                 name="rating"
                 value={starsCount}
                 id={`${starsCount}-star${starsCount > 1 && 's'}`}
-                type="radio" onChange={handleRatingChange}
+                type="radio"
+                onChange={handleRatingChange}
+                ref={ratingRef}
+                checked={starsCount === rating}
+                key={starsCount}
               />
-              <label htmlFor={`${starsCount}-star${starsCount > 1 && 's'}`}
+              <label htmlFor={`${starsCount}-star${starsCount > 1 ? 's' : ''}`}
                 className="reviews__rating-label form__rating-label"
                 title={ratingValue}
               >
@@ -42,7 +78,7 @@ function CommentForm(): JSX.Element {
                   <use xlinkHref="#icon-star" />
                 </svg>
               </label>
-            </>
+            </Fragment>
           );})}
       </div>
 
@@ -53,6 +89,7 @@ function CommentForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
         onChange={handleCommentChange}
+        ref={commentRef}
       />
 
       <div className="reviews__button-wrapper">

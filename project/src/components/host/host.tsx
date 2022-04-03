@@ -4,6 +4,8 @@ type HostProps = {
   offer: Offer;
 }
 function Host({offer}: HostProps): JSX.Element {
+  const {host, description} = offer;
+
   return (
     <div className="property__host">
       <h2 className="property__host-title">Meet the host</h2>
@@ -12,15 +14,15 @@ function Host({offer}: HostProps): JSX.Element {
           <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width={74} height={74} alt="Host avatar" />
         </div>
         <span className="property__user-name">
-          {offer.host.name}
+          {host.name}
         </span>
         <span className="property__user-status">
-          {offer.host.isPro ? 'Pro' : ''}
+          {host.isPro ? 'Pro' : ''}
         </span>
       </div>
       <div className="property__description">
         <p className="property__text">
-          {offer.description}
+          {description}
         </p>
       </div>
     </div>

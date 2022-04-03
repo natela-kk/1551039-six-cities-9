@@ -1,15 +1,26 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCityAction, changeSortTypeAction, loadOffersAction, loadPropertyAction, requireAuthorization, redirectToRoute} from './action';
-import { AuthorizationStatus, CITIES } from '../const';
+import {changeCityAction, changeSortTypeAction, loadOffersAction, loadPropertyAction, requireAuthorization, loadNearbyAction, addCommentAction, loadCommentsAction} from './action';
+import { AuthorizationStatus, CITIES, SORT_TYPE } from '../const';
+import { City, Offer } from '../types/offer';
 
-const DEFAULT_CITY = CITIES[0];
-const DEFAULT_TYPE = 'Popular';
-
-const initialState = {
-  city: DEFAULT_CITY,
+type initialStateType = {
+  city: City,
   offers: [],
-  property: {},
-  sortType: DEFAULT_TYPE,
+  property: Offer | null,
+  nearby: [],
+  comments: [],
+  sortType: string,
+  isDataLoaded: boolean,
+  authorizationStatus: AuthorizationStatus,
+};
+
+const initialState: initialStateType = {
+  city: CITIES[0],
+  offers: [],
+  property: null,
+  nearby: [],
+  comments: [],
+  sortType: SORT_TYPE.popular,
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
 };
@@ -28,6 +39,15 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadPropertyAction, (state, action) => {
       state.property = action.payload;
+    })
+    .addCase(loadNearbyAction, (state, action) => {
+      state.nearby = action.payload;
+    })
+    .addCase(loadCommentsAction, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(addCommentAction, (state, action) => {
+      state.comments = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

@@ -3,6 +3,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer',
   Main  = '/',
+  Error  = '*',
 }
 
 export enum AuthorizationStatus {
@@ -73,6 +74,7 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
 export enum HTTP_CODE {
