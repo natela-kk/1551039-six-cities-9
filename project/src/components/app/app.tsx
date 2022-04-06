@@ -15,7 +15,6 @@ import { getLoadedDataStatus } from '../../store/offers/selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  console.log(authorizationStatus);
   const isDataLoaded = useAppSelector(getLoadedDataStatus);
 
   if(!isDataLoaded) {

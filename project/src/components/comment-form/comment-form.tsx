@@ -17,6 +17,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const commentRef = useRef<HTMLTextAreaElement | null>(null);
   const ratingRef = useRef<HTMLInputElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
@@ -31,6 +32,11 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    // пытаюсь заблокировать форму
+    if(formRef.current) {
+      // formRef.current.disabled = true;
+    }
 
     if (commentRef.current !== null && ratingRef.current !== null) {
       dispatch(postCommentAction({
@@ -50,6 +56,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
     <form
       className="reviews__form form"
       onSubmit={handleSubmit}
+      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 

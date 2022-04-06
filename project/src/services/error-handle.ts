@@ -26,5 +26,7 @@ export const errorHandle = (error: ErrorType): void => {
       default:
         toast.info(`Unknown error: ${response.data.error}`);
     }
+  } else {
+    toast.info('Something went wrong');
   }
 };
