@@ -1,8 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
-import {Comments} from '../../types/state';
+import { Comment } from '../../types/comment';
 
-const initialState: Comments = {
+type InitialState = {
+  comments: Comment[],
+}
+
+const initialState: InitialState = {
   comments: [],
 };
 

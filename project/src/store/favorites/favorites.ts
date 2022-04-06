@@ -1,9 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
-import {Favorites} from '../../types/state';
+import { Offer } from '../../types/offer';
 
-const initialState: Favorites = {
+type InitialState = {
+  favorites: Offer[],
+  isFavoritesLoaded: boolean,
+}
+
+const initialState: InitialState = {
   favorites: [],
+  isFavoritesLoaded: false,
 };
 
 export const favorites = createSlice({
@@ -12,6 +18,7 @@ export const favorites = createSlice({
   reducers: {
     loadFavoritesAction: (state, action) => {
       state.favorites = action.payload;
+      state.isFavoritesLoaded = true;
     },
   }});
 

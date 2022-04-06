@@ -3,7 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { store } from '../../store';
 import { redirectToRoute } from '../../store/action';
-import { postFavoriteAction } from '../../store/api-actions';
+import { fetchFavoritesAction, postFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
@@ -26,13 +26,17 @@ function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps):
       dispatch(postFavoriteAction({
         id: offer.id,
         status: offerStatus}));
+      //////////это
+      if(window.location.href === 'http://localhost:9999/favorites') {
+        dispatch(fetchFavoritesAction());
+      }
+      ////////
     } else {
       store.dispatch(redirectToRoute(AppRoute.Login));
     }
   };
 
   return(
-
     <article
       className={`${isSmall ? 'favorites__card' : 'cities__place-card'} place-card`}
       onMouseOver={() => onOfferHover?.(offer.id)}
@@ -74,14 +78,14 @@ function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps):
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style = {{width: `${offer.rating / 5 * 100}%`}}></span>
+            <span style = {{width: `${Math.round(offer.rating) / 5 * 100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={AppRoute.Offer}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{offer.type.charAt(0).toUpperCase() + offer.type.slice(1)}</p>
       </div>
     </article>
   );

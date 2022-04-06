@@ -4,7 +4,11 @@ type CommentProps = {
   comment: Comment;
 }
 
+
 function CommentItem({comment}: CommentProps): JSX.Element{
+  const commentDate = new Date(comment.date);
+  const commentFormatedDate = `${commentDate.toLocaleString('default', { month: 'long' })} ${commentDate.getFullYear()}`;
+
   return(
     <li className="reviews__item" key={comment.id}>
       <div className="reviews__user user" >
@@ -25,7 +29,7 @@ function CommentItem({comment}: CommentProps): JSX.Element{
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{comment.date}</time>
+        <time className="reviews__time" dateTime={comment.date}>{commentFormatedDate}</time>
       </div>
     </li>
   );

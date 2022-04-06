@@ -11,13 +11,12 @@ import LoadingScreen from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
-import { getLoadedDataStatus, loadOffers } from '../../store/offers/selectors';
+import { getLoadedDataStatus } from '../../store/offers/selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   console.log(authorizationStatus);
   const isDataLoaded = useAppSelector(getLoadedDataStatus);
-  const offers = useAppSelector(loadOffers);
 
   if(!isDataLoaded) {
     return (
@@ -42,7 +41,7 @@ function App(): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <Favorites offers={offers}/>
+              <Favorites />
             </PrivateRoute>
           }
         />

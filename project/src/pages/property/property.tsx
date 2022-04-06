@@ -14,12 +14,11 @@ import {useAppDispatch} from '../../hooks/index';
 import LoadingScreen from '../../components/loader/loader';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import { getCity } from '../../store/city/selectors';
-import { loadProperty } from '../../store/property/selectors';
-import { loadNearby } from '../../store/nearby/selectors';
 import { loadComments } from '../../store/comments/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { redirectToRoute } from '../../store/action';
 import { store } from '../../store';
+import { loadNearby, loadProperty } from '../../store/offers/selectors';
 
 const NEARBY_COUNT = 3;
 const IMAGES_COUNT = 6;
@@ -83,7 +82,7 @@ function Property(): JSX.Element {
                   {property.title}
                 </h1>
                 <button
-                  className="property__bookmark-button button"
+                  className={`property__bookmark-button ${property.isFavorite && 'property__bookmark-button--active'} button`}
                   type="button"
                   onClick={handleClick}
                 >
@@ -104,7 +103,7 @@ function Property(): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {property.type}
+                  {property.type.charAt(0).toUpperCase() + property.type.slice(1)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {property.bedrooms} {property.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}

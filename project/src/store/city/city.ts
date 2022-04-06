@@ -1,8 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {CITIES, NameSpace} from '../../const';
-import {SelectedCity} from '../../types/state';
+import { City } from '../../types/offer';
 
-const initialState: SelectedCity = {
+type InitialState ={
+  city: City,
+}
+
+const initialState: InitialState = {
   city: CITIES[0],
 };
 
