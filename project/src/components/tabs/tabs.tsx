@@ -28,7 +28,7 @@ function Tabs({currentsCity}: TabsProps): JSX.Element {
               }}
               key={city.name}
             >
-              <Link className={cn('locations__item-link tabs__item', {'tabs__item--active': currentsCity === city.name})} >
+              <Link to={''} className={cn('locations__item-link tabs__item', {'tabs__item--active': currentsCity === city.name})} >
                 <span>{city.name}</span>
               </Link>
             </li>
