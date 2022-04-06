@@ -1,11 +1,22 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {loadOffersAction, requireAuthorization, loadPropertyAction, redirectToRoute, loadNearbyAction, loadCommentsAction, addCommentAction} from './action';
+import {redirectToRoute} from './action';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {api, store} from './index';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {dropToken, saveToken} from '../services/token';
 import {CommentData} from '../types/comment-data';
+import { loadOffersAction } from './offers/offers';
+import { loadPropertyAction } from './property/property';
+import { loadNearbyAction } from './nearby/nearby';
+import { requireAuthorization } from './user-process/user-process';
+import { loadCommentsAction } from './comments/comments';
+import { loadFavoritesAction } from './favorites/favorites';
+
+type markFavoriteProps = {
+  id: number,
+  status: number,
+}
 
 export const fetchOfferAction = createAsyncThunk(
   'data/fetchOffers',
@@ -28,6 +39,30 @@ export const fetchPropertyAction = createAsyncThunk(
     } catch(error) {
       errorHandle(error);
       store.dispatch(redirectToRoute(AppRoute.Main));
+    }
+  },
+);
+
+export const fetchFavoritesAction = createAsyncThunk(
+  'data/fetchFavorites',
+  async () => {
+    try {
+      const {data} = await api.get(APIRoute.Favorite);
+      store.dispatch(loadFavoritesAction(data));
+    } catch(error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const markFavoriteAction = createAsyncThunk(
+  'data/markFavorite',
+  async ({id, status}: markFavoriteProps) => {
+    try {
+      const {data} = await api.post(`${APIRoute.Favorite}/${id}/${status}`);
+      store.dispatch(loadFavoritesAction(data));
+    } catch(error) {
+      errorHandle(error);
     }
   },
 );
@@ -103,7 +138,7 @@ export const postCommentAction = createAsyncThunk(
   async ({id, comment, rating}: CommentData) => {
     try{
       const {data} = await api.post(`${APIRoute.Comments}/${id}`, {comment, rating});
-      store.dispatch(addCommentAction(data));
+      store.dispatch(loadCommentsAction(data));
     }  catch(error) {
       errorHandle(error);
     }

@@ -3,9 +3,10 @@ import { AuthorizationStatus } from '../../const';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function Navigation(): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   return (

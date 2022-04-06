@@ -10,9 +10,13 @@ import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import { getLoadedDataStatus, loadOffers } from '../../store/offers/selectors';
 
 function App(): JSX.Element {
-  const {authorizationStatus, isDataLoaded, offers} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const offers = useAppSelector(loadOffers);
 
   if(!isDataLoaded) {
     return (

@@ -75,10 +75,22 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum HTTP_CODE {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
+}
+
+export enum NameSpace {
+  sort = 'SORT',
+  city = 'CITY',
+  user = 'USER',
+  offers = 'OFFERS',
+  property = 'PROPERTY',
+  nearby = 'NEARBY',
+  comments = 'COMMENTS',
+  favorites = 'FAVORITES',
 }

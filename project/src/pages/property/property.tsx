@@ -13,6 +13,11 @@ import {fetchNearbyAction, fetchPropertyAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks/index';
 import LoadingScreen from '../../components/loader/loader';
 import {AuthorizationStatus} from '../../const';
+import { getCity } from '../../store/city/selectors';
+import { loadProperty } from '../../store/property/selectors';
+import { loadNearby } from '../../store/nearby/selectors';
+import { loadComments } from '../../store/comments/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 const NEARBY_COUNT = 3;
 const IMAGES_COUNT = 6;
@@ -20,7 +25,12 @@ const IMAGES_COUNT = 6;
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {city, property, nearby, comments, authorizationStatus} = useAppSelector((state) => state);
+  const city = useAppSelector(getCity);
+  const property = useAppSelector(loadProperty);
+  const nearby = useAppSelector(loadNearby);
+  const comments = useAppSelector(loadComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const {id} = useParams();
   const offerId = Number(id);
   const nearbyOffers = nearby.slice(0, NEARBY_COUNT);

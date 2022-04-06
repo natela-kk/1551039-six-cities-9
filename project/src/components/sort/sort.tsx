@@ -1,8 +1,8 @@
-import {useAppDispatch} from '../../hooks';
-import {changeSortTypeAction} from '../../store/action';
-import {SORT_TYPE} from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { SORT_TYPE } from '../../const';
 import cn from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+import { changeSortTypeAction } from '../../store/sort/sort';
 
 type SortProps = {
   sortType: string;

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction } from '../../store/api-actions';
+import { loadComments } from '../../store/comments/selectors';
 import {Comment} from '../../types/comment';
 import CommentItem from '../comment-item/comment-item';
 
@@ -11,7 +12,7 @@ type CommentListProps = {
 function CommentList({offerId}: CommentListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {comments} = useAppSelector((state) => state);
+  const comments = useAppSelector(loadComments);
 
   useEffect(() => {
     dispatch(fetchCommentsAction(offerId));

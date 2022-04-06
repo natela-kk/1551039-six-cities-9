@@ -1,8 +1,9 @@
-import {changeCityAction} from '../../store/action';
 import { CITIES } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {City} from '../../types/offer';
 import cn from 'classnames';
+import { changeCityAction } from '../../store/city/city';
+import { Link } from 'react-router-dom';
 
 type TabsProps = {
   currentsCity: string;
@@ -27,9 +28,9 @@ function Tabs({currentsCity}: TabsProps): JSX.Element {
               }}
               key={city.name}
             >
-              <a className={cn('locations__item-link tabs__item', {'tabs__item--active': currentsCity === city.name})} >
+              <Link className={cn('locations__item-link tabs__item', {'tabs__item--active': currentsCity === city.name})} >
                 <span>{city.name}</span>
-              </a>
+              </Link>
             </li>
           ),
           )}

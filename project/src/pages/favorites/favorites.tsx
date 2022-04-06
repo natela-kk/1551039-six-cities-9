@@ -2,6 +2,10 @@ import Header from '../../components/header/header';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
 import {Offer} from '../../types/offer';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loadFavorites } from '../../store/favorites/selectors';
+import { useEffect } from 'react';
 
 type FavoriteProps = {
   offers: Offer[];
@@ -9,8 +13,13 @@ type FavoriteProps = {
 
 
 function Favorites({offers}: FavoriteProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
-  const favorites = offers.filter((offer) => offer.isFavorite);
+  const favorites = useAppSelector(loadFavorites);
+
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
 
   const favoriteCities = [...new Set(favorites.map((offer) => offer.city.name))];
 
