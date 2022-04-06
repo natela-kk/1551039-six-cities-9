@@ -9,10 +9,17 @@ import { useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import {useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
-import {fetchNearbyAction, fetchPropertyAction} from '../../store/api-actions';
+import {fetchNearbyAction, fetchPropertyAction, postFavoriteAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks/index';
 import LoadingScreen from '../../components/loader/loader';
-import {AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import { getCity } from '../../store/city/selectors';
+import { loadProperty } from '../../store/property/selectors';
+import { loadNearby } from '../../store/nearby/selectors';
+import { loadComments } from '../../store/comments/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { redirectToRoute } from '../../store/action';
+import { store } from '../../store';
 
 const NEARBY_COUNT = 3;
 const IMAGES_COUNT = 6;
@@ -20,10 +27,26 @@ const IMAGES_COUNT = 6;
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const {city, property, nearby, comments, authorizationStatus} = useAppSelector((state) => state);
+  const city = useAppSelector(getCity);
+  const property = useAppSelector(loadProperty);
+  const nearby = useAppSelector(loadNearby);
+  const comments = useAppSelector(loadComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const {id} = useParams();
   const offerId = Number(id);
   const nearbyOffers = nearby.slice(0, NEARBY_COUNT);
+
+  const handleClick = () => {
+    if(authorizationStatus === AuthorizationStatus.Auth && property) {
+      const offerStatus = property.isFavorite ? 0 : 1;
+      dispatch(postFavoriteAction({
+        id: property.id,
+        status: offerStatus}));
+    } else {
+      store.dispatch(redirectToRoute(AppRoute.Login));
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchPropertyAction(offerId));
@@ -59,7 +82,11 @@ function Property(): JSX.Element {
                 <h1 className="property__name">
                   {property.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button
+                  className="property__bookmark-button button"
+                  type="button"
+                  onClick={handleClick}
+                >
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>

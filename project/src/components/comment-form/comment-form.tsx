@@ -27,7 +27,6 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
 
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(e.target.value));
-    console.log(e.target.value);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -41,7 +40,6 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
       }));
       setComment('');
       setRating(0);
-      // ratingRef.current.checked = false;
     }
   };
 

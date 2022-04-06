@@ -1,6 +1,11 @@
 import { Offer } from '../../types/offer';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
+import { store } from '../../store';
+import { redirectToRoute } from '../../store/action';
+import { postFavoriteAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type OfferProps = {
   offer: Offer;
@@ -10,7 +15,21 @@ type OfferProps = {
 }
 
 function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const modifier = isSmall ? 'favorites' : 'cities';
+  const offerStatus = offer.isFavorite ? 0 : 1;
+
+  const handleClick = () => {
+    if(authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(postFavoriteAction({
+        id: offer.id,
+        status: offerStatus}));
+    } else {
+      store.dispatch(redirectToRoute(AppRoute.Login));
+    }
+  };
 
   return(
 
@@ -45,6 +64,7 @@ function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps):
           <button
             className={`place-card__bookmark-button ${offer.isFavorite && 'place-card__bookmark-button--active'} button`}
             type="button"
+            onClick={handleClick}
           >
             <svg className="place-card__bookmark-icon shadow-root" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
