@@ -14,7 +14,6 @@ type FavoriteProps = {
 
 function Favorites({offers}: FavoriteProps): JSX.Element {
   const dispatch = useAppDispatch();
-
   const favorites = useAppSelector(loadFavorites);
 
   useEffect(() => {

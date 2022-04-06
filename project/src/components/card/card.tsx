@@ -3,9 +3,8 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { store } from '../../store';
 import { redirectToRoute } from '../../store/action';
-import { markFavoriteAction } from '../../store/api-actions';
+import { postFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useRef } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type OfferProps = {
@@ -21,11 +20,10 @@ function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps):
 
   const modifier = isSmall ? 'favorites' : 'cities';
   const offerStatus = offer.isFavorite ? 0 : 1;
-  const buttonRef = useRef(null);
 
   const handleClick = () => {
     if(authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(markFavoriteAction({
+      dispatch(postFavoriteAction({
         id: offer.id,
         status: offerStatus}));
     } else {
@@ -66,7 +64,6 @@ function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps):
           <button
             className={`place-card__bookmark-button ${offer.isFavorite && 'place-card__bookmark-button--active'} button`}
             type="button"
-            ref={buttonRef}
             onClick={handleClick}
           >
             <svg className="place-card__bookmark-icon shadow-root" width="18" height="19">

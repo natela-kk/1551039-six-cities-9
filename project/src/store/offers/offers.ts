@@ -15,7 +15,13 @@ export const offers = createSlice({
       state.offers = action.payload;
       state.isDataLoaded = true;
     },
+    markFavoriteAction: (state, action) => {
+      const updatedOfferIndex = state.offers.findIndex((offer) => offer.id === action.payload.id);
+      if(updatedOfferIndex !== -1) {
+        state.offers[updatedOfferIndex] = action.payload;
+      }
+    },
   },
 });
 
-export const {loadOffersAction} = offers.actions;
+export const {loadOffersAction, markFavoriteAction} = offers.actions;

@@ -13,9 +13,6 @@ export const favorites = createSlice({
     loadFavoritesAction: (state, action) => {
       state.favorites = action.payload;
     },
-    markFavoriteAction: (state, action) => {
-      state.favorites = action.payload;
-    },
   }});
 
-export const {loadFavoritesAction, markFavoriteAction} = favorites.actions;
+export const {loadFavoritesAction} = favorites.actions;

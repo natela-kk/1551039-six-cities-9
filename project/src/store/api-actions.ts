@@ -6,12 +6,12 @@ import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {dropToken, saveToken} from '../services/token';
 import {CommentData} from '../types/comment-data';
-import { loadOffersAction } from './offers/offers';
+import { loadOffersAction, markFavoriteAction } from './offers/offers';
 import { loadPropertyAction } from './property/property';
 import { loadNearbyAction } from './nearby/nearby';
 import { requireAuthorization } from './user-process/user-process';
 import { loadCommentsAction } from './comments/comments';
-import { loadFavoritesAction } from './favorites/favorites';
+import { loadFavoritesAction} from './favorites/favorites';
 
 type markFavoriteProps = {
   id: number,
@@ -55,12 +55,12 @@ export const fetchFavoritesAction = createAsyncThunk(
   },
 );
 
-export const markFavoriteAction = createAsyncThunk(
+export const postFavoriteAction = createAsyncThunk(
   'data/markFavorite',
   async ({id, status}: markFavoriteProps) => {
     try {
       const {data} = await api.post(`${APIRoute.Favorite}/${id}/${status}`);
-      store.dispatch(loadFavoritesAction(data));
+      store.dispatch(markFavoriteAction(data));
     } catch(error) {
       errorHandle(error);
     }
