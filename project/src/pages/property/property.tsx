@@ -17,7 +17,6 @@ import { getCity } from '../../store/city/selectors';
 import { loadComments } from '../../store/comments/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { redirectToRoute } from '../../store/action';
-import { store } from '../../store';
 import { loadNearby, loadProperty } from '../../store/offers/selectors';
 
 const NEARBY_COUNT = 3;
@@ -38,13 +37,13 @@ function Property(): JSX.Element {
   const nearbyOffers = nearby.slice(0, NEARBY_COUNT);
 
   const handleClick = () => {
-    if(authorizationStatus === AuthorizationStatus.Auth && property) {
+    if (authorizationStatus === AuthorizationStatus.Auth && property) {
       const offerStatus = property.isFavorite ? 0 : 1;
       dispatch(postFavoriteAction({
         id: property.id,
         status: offerStatus}));
     } else {
-      store.dispatch(redirectToRoute(AppRoute.Login));
+      dispatch(redirectToRoute(AppRoute.Login));
     }
   };
 
@@ -53,7 +52,7 @@ function Property(): JSX.Element {
     dispatch(fetchNearbyAction(offerId));
   }, [dispatch, offerId]);
 
-  if(!property) {
+  if (!property) {
     return (
       <LoadingScreen />
     );

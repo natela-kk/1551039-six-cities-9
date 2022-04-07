@@ -17,10 +17,10 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const commentRef = useRef<HTMLTextAreaElement | null>(null);
   const ratingRef = useRef<HTMLInputElement | null>(null);
-  const formRef = useRef<HTMLFormElement | null>(null);
 
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
+  const [inProcess, setInProcess] = useState(false);
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
@@ -30,22 +30,26 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
     setRating(Number(e.target.value));
   };
 
+  const enableForm = () => setInProcess(false);
+
+  const resetForm = () => {
+    setComment('');
+    setRating(0);
+    enableForm();
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    // пытаюсь заблокировать форму
-    if(formRef.current) {
-      // formRef.current.disabled = true;
-    }
-
     if (commentRef.current !== null && ratingRef.current !== null) {
+      setInProcess(true);
       dispatch(postCommentAction({
         id: offerId,
         comment: comment,
         rating: rating,
+        onSuccess: resetForm,
+        onFail: enableForm,
       }));
-      setComment('');
-      setRating(0);
     }
   };
 
@@ -56,7 +60,6 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
     <form
       className="reviews__form form"
       onSubmit={handleSubmit}
-      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
@@ -72,6 +75,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
                 type="radio"
                 onChange={handleRatingChange}
                 ref={ratingRef}
+                disabled={inProcess}
                 checked={starsCount === rating}
                 key={starsCount}
               />
@@ -93,6 +97,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
+        disabled={inProcess}
         onChange={handleCommentChange}
         ref={commentRef}
       />
@@ -108,7 +113,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled}
+          disabled={isDisabled || inProcess}
         >
           Submit
         </button>

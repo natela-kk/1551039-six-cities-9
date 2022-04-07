@@ -9,3 +9,7 @@ export const getLoadedDataStatus = (state: State): boolean => state[NameSpace.of
 export const loadProperty = (state: State): Offer | null => state[NameSpace.offers].property;
 
 export const loadNearby = (state: State): Offer[] => state[NameSpace.offers].nearby;
+
+export const loadFavorites = (state: State): Offer[] => state[NameSpace.offers].favorites;
+
+export const getLoadedFavoritesStatus = (state: State): boolean => state[NameSpace.offers].isFavoritesLoaded;

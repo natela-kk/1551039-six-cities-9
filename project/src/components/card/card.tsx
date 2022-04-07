@@ -1,9 +1,8 @@
 import { Offer } from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
-import { store } from '../../store';
 import { redirectToRoute } from '../../store/action';
-import { fetchFavoritesAction, postFavoriteAction } from '../../store/api-actions';
+import { postFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
@@ -25,14 +24,10 @@ function Card({offer, onOfferHover, onOfferLeave, isSmall = false}: OfferProps):
     if(authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(postFavoriteAction({
         id: offer.id,
-        status: offerStatus}));
-      //////////это
-      if(window.location.href === 'http://localhost:9999/favorites') {
-        dispatch(fetchFavoritesAction());
-      }
-      ////////
+        status: offerStatus,
+      }));
     } else {
-      store.dispatch(redirectToRoute(AppRoute.Login));
+      dispatch(redirectToRoute(AppRoute.Login));
     }
   };
 

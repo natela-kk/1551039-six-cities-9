@@ -3,10 +3,10 @@ import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getLoadedFavoritesStatus, loadFavorites } from '../../store/favorites/selectors';
 import { useEffect } from 'react';
 import LoadingScreen from '../../components/loader/loader';
 import EmptyFavorites from '../../components/empty-favorites/empty-favorites';
+import { getLoadedFavoritesStatus, loadFavorites } from '../../store/offers/selectors';
 
 function Favorites(): JSX.Element {
   const isFavoritesLoaded = useAppSelector(getLoadedFavoritesStatus);
@@ -18,7 +18,7 @@ function Favorites(): JSX.Element {
     dispatch(fetchFavoritesAction());
   }, [dispatch]);
 
-  if(!isFavoritesLoaded) {
+  if (!isFavoritesLoaded) {
     return (
       <LoadingScreen />
     );

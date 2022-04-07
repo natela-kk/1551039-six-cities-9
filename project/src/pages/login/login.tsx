@@ -3,9 +3,8 @@ import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent, useRef } from 'react';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { store } from '../../store';
-import { redirectToRoute } from '../../store/action';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { Navigate } from 'react-router-dom';
 
 const PASSWORD_REGEXP = /(?=.*[0-9])(?=.*[a-zA-Z])/;
 const PASSWORD_ERROR = 'Пароль должен состоять минимум из одной буквы и одной цифры';
@@ -15,14 +14,13 @@ const EMAIL_ERROR = 'Введите корректный адрес электр
 
 function Login(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  if(authorizationStatus === AuthorizationStatus.Auth) {
-    store.dispatch(redirectToRoute(AppRoute.Main));
-  }
-
   const dispatch = useAppDispatch();
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  if(authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main}/>;
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
