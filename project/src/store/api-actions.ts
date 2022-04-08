@@ -6,12 +6,9 @@ import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {dropToken, saveToken} from '../services/token';
 import {CommentData} from '../types/comment-data';
-import { loadOffersAction, markFavoriteAction } from './offers/offers';
-import { loadPropertyAction } from './property/property';
-import { loadNearbyAction } from './nearby/nearby';
+import { loadFavoritesAction, loadNearbyAction, loadOffersAction, loadPropertyAction, markFavoriteAction } from './offers/offers';
 import { requireAuthorization } from './user-process/user-process';
 import { loadCommentsAction } from './comments/comments';
-import { loadFavoritesAction} from './favorites/favorites';
 
 type markFavoriteProps = {
   id: number,
@@ -135,11 +132,13 @@ export const fetchCommentsAction = createAsyncThunk(
 
 export const postCommentAction = createAsyncThunk(
   'user/comment',
-  async ({id, comment, rating}: CommentData) => {
+  async ({id, comment, rating, onSuccess, onFail}: CommentData) => {
     try{
       const {data} = await api.post(`${APIRoute.Comments}/${id}`, {comment, rating});
       store.dispatch(loadCommentsAction(data));
+      onSuccess?.();
     }  catch(error) {
+      onFail?.();
       errorHandle(error);
     }
   },

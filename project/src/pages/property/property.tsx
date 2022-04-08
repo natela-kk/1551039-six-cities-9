@@ -14,15 +14,14 @@ import {useAppDispatch} from '../../hooks/index';
 import LoadingScreen from '../../components/loader/loader';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import { getCity } from '../../store/city/selectors';
-import { loadProperty } from '../../store/property/selectors';
-import { loadNearby } from '../../store/nearby/selectors';
 import { loadComments } from '../../store/comments/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { redirectToRoute } from '../../store/action';
-import { store } from '../../store';
+import { loadNearby, loadProperty } from '../../store/offers/selectors';
 
 const NEARBY_COUNT = 3;
 const IMAGES_COUNT = 6;
+export const MAX_COMMENTS_LENGTH = 10;
 
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -38,13 +37,13 @@ function Property(): JSX.Element {
   const nearbyOffers = nearby.slice(0, NEARBY_COUNT);
 
   const handleClick = () => {
-    if(authorizationStatus === AuthorizationStatus.Auth && property) {
+    if (authorizationStatus === AuthorizationStatus.Auth && property) {
       const offerStatus = property.isFavorite ? 0 : 1;
       dispatch(postFavoriteAction({
         id: property.id,
         status: offerStatus}));
     } else {
-      store.dispatch(redirectToRoute(AppRoute.Login));
+      dispatch(redirectToRoute(AppRoute.Login));
     }
   };
 
@@ -53,7 +52,7 @@ function Property(): JSX.Element {
     dispatch(fetchNearbyAction(offerId));
   }, [dispatch, offerId]);
 
-  if(!property) {
+  if (!property) {
     return (
       <LoadingScreen />
     );
@@ -83,7 +82,7 @@ function Property(): JSX.Element {
                   {property.title}
                 </h1>
                 <button
-                  className="property__bookmark-button button"
+                  className={`property__bookmark-button ${property.isFavorite && 'property__bookmark-button--active'} button`}
                   type="button"
                   onClick={handleClick}
                 >
@@ -104,7 +103,7 @@ function Property(): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {property.type}
+                  {property.type.charAt(0).toUpperCase() + property.type.slice(1)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {property.bedrooms} {property.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}
@@ -125,7 +124,7 @@ function Property(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews ·{' '}
-                  <span className="reviews__amount">{comments.length}</span>
+                  <span className="reviews__amount">{comments.length <= MAX_COMMENTS_LENGTH ? comments.length : MAX_COMMENTS_LENGTH}</span>
                 </h2>
 
                 <CommentList offerId={offerId}/>

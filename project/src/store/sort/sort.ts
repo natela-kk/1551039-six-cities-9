@@ -1,8 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, SORT_TYPE} from '../../const';
-import {SortType} from '../../types/state';
 
-const initialState: SortType = {
+type InitialState = {
+  sortType: string,
+}
+
+const initialState: InitialState = {
   sortType: SORT_TYPE.popular,
 };
 

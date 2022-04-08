@@ -20,6 +20,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
 
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
+  const [inProcess, setInProcess] = useState(false);
 
   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
@@ -29,17 +30,26 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
     setRating(Number(e.target.value));
   };
 
+  const enableForm = () => setInProcess(false);
+
+  const resetForm = () => {
+    setComment('');
+    setRating(0);
+    enableForm();
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (commentRef.current !== null && ratingRef.current !== null) {
+      setInProcess(true);
       dispatch(postCommentAction({
         id: offerId,
         comment: comment,
         rating: rating,
+        onSuccess: resetForm,
+        onFail: enableForm,
       }));
-      setComment('');
-      setRating(0);
     }
   };
 
@@ -65,6 +75,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
                 type="radio"
                 onChange={handleRatingChange}
                 ref={ratingRef}
+                disabled={inProcess}
                 checked={starsCount === rating}
                 key={starsCount}
               />
@@ -86,6 +97,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
+        disabled={inProcess}
         onChange={handleCommentChange}
         ref={commentRef}
       />
@@ -101,7 +113,7 @@ function CommentForm({offerId}: CommentFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled}
+          disabled={isDisabled || inProcess}
         >
           Submit
         </button>

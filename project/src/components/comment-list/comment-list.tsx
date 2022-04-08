@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { MAX_COMMENTS_LENGTH } from '../../pages/property/property';
 import { fetchCommentsAction } from '../../store/api-actions';
 import { loadComments } from '../../store/comments/selectors';
 import {Comment} from '../../types/comment';
@@ -20,7 +21,7 @@ function CommentList({offerId}: CommentListProps): JSX.Element {
 
   return (
     <ul className="reviews__list">
-      {comments.map((commentItem: Comment) => (
+      {comments.slice(0, MAX_COMMENTS_LENGTH).map((commentItem: Comment) => (
         <CommentItem comment={commentItem} key={commentItem.id} />
       ))}
     </ul>
@@ -28,5 +29,3 @@ function CommentList({offerId}: CommentListProps): JSX.Element {
 
 
 export default CommentList;
-
-export{};
