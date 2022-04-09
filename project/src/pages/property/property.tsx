@@ -11,7 +11,7 @@ import {useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {fetchNearbyAction, fetchPropertyAction, postFavoriteAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks/index';
-import LoadingScreen from '../../components/loader/loader';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import { getCity } from '../../store/city/selectors';
 import { loadComments } from '../../store/comments/selectors';
@@ -21,7 +21,6 @@ import { loadNearby, loadProperty } from '../../store/offers/selectors';
 
 const NEARBY_COUNT = 3;
 const IMAGES_COUNT = 6;
-export const MAX_COMMENTS_LENGTH = 10;
 
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -124,7 +123,7 @@ function Property(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews ·{' '}
-                  <span className="reviews__amount">{comments.length <= MAX_COMMENTS_LENGTH ? comments.length : MAX_COMMENTS_LENGTH}</span>
+                  <span className="reviews__amount">{comments.length}</span>
                 </h2>
 
                 <CommentList offerId={offerId}/>

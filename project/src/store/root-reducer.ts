@@ -7,9 +7,9 @@ import { sort } from './sort/sort';
 import { userProcess } from './user-process/user-process';
 
 export const rootReducer = combineReducers({
-  [NameSpace.user]: userProcess.reducer,
-  [NameSpace.city]: city.reducer,
-  [NameSpace.comments]: comments.reducer,
-  [NameSpace.offers]: offers.reducer,
-  [NameSpace.sort]: sort.reducer,
+  [NameSpace.User]: userProcess.reducer,
+  [NameSpace.City]: city.reducer,
+  [NameSpace.Comments]: comments.reducer,
+  [NameSpace.Offers]: offers.reducer,
+  [NameSpace.Sort]: sort.reducer,
 });

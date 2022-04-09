@@ -10,7 +10,7 @@ const initialState: InitialState = {
 };
 
 export const sort = createSlice({
-  name: NameSpace.sort,
+  name: NameSpace.Sort,
   initialState,
   reducers: {
     changeSortTypeAction: (state, action) => {

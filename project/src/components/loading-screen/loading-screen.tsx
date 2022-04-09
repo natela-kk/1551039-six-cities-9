@@ -1,5 +1,5 @@
 import * as Loader from 'react-loader-spinner';
-import styles from './loader.module.css';
+import styles from './loading-screen.module.css';
 
 function LoadingScreen(): JSX.Element {
   return (

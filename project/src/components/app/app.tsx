@@ -7,7 +7,7 @@ import PrivateRoute from '../private-route/private-route';
 import {Route, Routes, Navigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../loader/loader';
+import LoadingScreen from '../loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';

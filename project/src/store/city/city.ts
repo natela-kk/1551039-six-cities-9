@@ -11,7 +11,7 @@ const initialState: InitialState = {
 };
 
 export const city = createSlice({
-  name: NameSpace.city,
+  name: NameSpace.City,
   initialState,
   reducers: {
     changeCityAction: (state, action) => {
