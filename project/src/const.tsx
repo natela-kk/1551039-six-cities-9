@@ -78,19 +78,19 @@ export enum APIRoute {
   Favorite = '/favorite',
 }
 
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+export enum HTTPCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }
 
 export enum NameSpace {
-  sort = 'SORT',
-  city = 'CITY',
-  user = 'USER',
-  offers = 'OFFERS',
-  property = 'PROPERTY',
-  nearby = 'NEARBY',
-  comments = 'COMMENTS',
-  favorites = 'FAVORITES',
+  Sort = 'SORT',
+  City = 'CITY',
+  User = 'USER',
+  Offers = 'OFFERS',
+  Property = 'PROPERTY',
+  Nearby = 'NEARBY',
+  Comments = 'COMMENTS',
+  Favorites = 'FAVORITES',
 }

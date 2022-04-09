@@ -11,7 +11,7 @@ const initialState: InitialState = {
 };
 
 export const comments = createSlice({
-  name: NameSpace.comments,
+  name: NameSpace.Comments,
   initialState,
   reducers: {
     loadCommentsAction: (state, action) => {

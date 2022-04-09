@@ -21,7 +21,7 @@ const initialState: InitialState = {
 };
 
 export const offers = createSlice({
-  name: NameSpace.offers,
+  name: NameSpace.Offers,
   initialState,
   reducers: {
     loadOffersAction: (state, action) => {

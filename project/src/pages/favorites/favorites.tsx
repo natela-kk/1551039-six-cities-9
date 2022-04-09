@@ -4,7 +4,7 @@ import Footer from '../../components/footer/footer';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import LoadingScreen from '../../components/loader/loader';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 import EmptyFavorites from '../../components/empty-favorites/empty-favorites';
 import { getLoadedFavoritesStatus, loadFavorites } from '../../store/offers/selectors';
 
